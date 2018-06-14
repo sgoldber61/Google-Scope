@@ -1,12 +1,13 @@
 
 
 // get data from storage;
-chrome.storage.sync.get(['siteNames'], function(result) {
-	console.log('Value currently is ' + result.siteNames);
+chrome.storage.sync.get(['sites'], function(result) {
+	console.log('Stored sites:');
+  console.log(JSON.parse(JSON.stringify(result.sites)));
   
   // give buttons names depending on siteNames in storage
   $('.site-button').each(function(i) {
-    $(this).attr('name', result.siteNames[i]);
+    $(this).attr('name', result.sites[i].hostName);
   });
 });
 

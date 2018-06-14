@@ -14,23 +14,72 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   sendResponse();
 });
 
-  
-const siteNames = ['stackoverflow.com', 'github.com', 'developer.mozilla.org/en-US/docs/Web', 'medium.com', 'www.w3schools.com', 'youtube.com', 'www.reddit.com/r/learnprogramming', 'en.wikipedia.org/wiki/Main_Page'];
+// default site names
+const siteNames = ['stackoverflow.com', 'github.com', 'developer.mozilla.org', 'medium.com', 'www.w3schools.com', 'youtube.com', 'www.reddit.com', 'en.wikipedia.org'];
 
-chrome.storage.sync.set({siteNames}, function() {
-	console.log('siteNames is set to ' + siteNames);
+const sites = siteNames.map(siteName => {
+  return {hostName: siteName, title: ''};
 });
 
+
+// initialize storage with defaults
+
+chrome.storage.sync.set({sites}, function() {
+  console.log('sites data');
+  console.log(sites);
+});
 
 
 // right click stuff
 
-/*
-chrome.contextMenus.create({title: "Add site to ", contexts: ["selection"], onclick: addSiteToStorage});
+chrome.contextMenus.create({id: 'add-site-command', title: 'Add site to Google Scope', contexts: ['all']});
 
-function addSiteToStorage() {
-  console.log('hi');
-  console.log(window.location.href);
+chrome.contextMenus.onClicked.addListener(function() {
+  // console.log sanity check
+  console.log('add website context menu ' + Date.now());
+  
+  // get the website (hostname?) and site name (title?) and add them to storage
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    const tab = tabs[0];
+    const title = tab.title;
+    const hostName = getHostname(tab.url);
+    
+    console.log(title);
+    console.log(hostName);
+    
+    // put data into storage
+    chrome.storage.sync.get(['sites'], function(result) {
+      console.log('current sites:');
+      console.log(JSON.parse(JSON.stringify(result.sites)));
+      
+      // should we add site?
+      let addQ = true;
+      for (const site of result.sites) {
+        if (site.hostName === hostName) {
+          addQ = false;
+          break;
+        }
+      }
+      if (!addQ) {
+        console.log('hostName already in sites, don\'t add');
+        return;
+      }
+      
+      // add site
+      result.sites.push({title, hostName});
+      chrome.storage.sync.set({sites: result.sites}, function() {
+        console.log('site added');
+      });
+    });
+    
+  });
+});
+
+// helper function for hostname
+function getHostname(href) {
+  const l = document.createElement('a');
+  l.href = href;
+  return l.hostname;
 }
-*/
+
 
