@@ -3,6 +3,11 @@
 // get data from storage;
 chrome.storage.sync.get(['siteNames'], function(result) {
 	console.log('Value currently is ' + result.siteNames);
+  
+  // give buttons names depending on siteNames in storage
+  $('.site-button').each(function(i) {
+    $(this).attr('name', result.siteNames[i]);
+  });
 });
 
 
@@ -13,13 +18,13 @@ $('.buttons > button').on('click', function() {
   $button.attr('class', className === 'selected-keyword' ? 'unselected-keyword' : 'selected-keyword');
 });
 
+
 // event handler for website toggle
 $('.site-button').on('click', function() {
-  const $site = $(this);
-  
-  
+  const $button = $(this);
+  const className = $button.attr('class');
+  $button.attr('class', className === 'site-button selected-site' ? 'site-button unselected-site' : 'site-button selected-site');
 });
-
 
 
 // event handler for submitting search
@@ -42,23 +47,27 @@ $('form').on('submit', function(e) {
   console.log(keywords);
   
   // obtain list of websites
-  
-  
-  
+  const sites = [];
+  $('.site-button').each(function(i) {
+    const $button = $(this);
+    const className = $button.attr('class'), site = $button.attr('name');
+    if (className === 'site-button selected-site') {
+      sites.push(site);
+    }
+  });
+  console.log(sites);
   
   // submit the search
-  submitSearch(searchString, keywords);
+  submitSearch(searchString, keywords, sites);
 });
 
 
 // submit search functionality
 
 function submitSearch(searchString, keywords, sites) {
-  if (!sites) sites = ['www.w3schools.com', 'stackoverflow.com'];
-  
   const searchURL = createSearchURL(searchString, keywords, sites);
   console.log(searchURL);
-  // window.location.href = searchURL;
+  window.location.href = searchURL;
 }
 
 

@@ -5,17 +5,17 @@
 // });
 
 
+console.log('This is the beginning of background.js');
+
 //example of using a message handler from the inject scripts
 
-chrome.extension.onMessage.addListener(
-  function(request, sender, sendResponse) {
-  	chrome.pageAction.show(sender.tab.id);
-    sendResponse();
-  });
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+  chrome.pageAction.show(sender.tab.id);
+  sendResponse();
+});
 
   
-console.log('hello');
-const siteNames = ['stackoverflow.com', ];
+const siteNames = ['stackoverflow.com', 'github.com', 'developer.mozilla.org/en-US/docs/Web', 'medium.com', 'www.w3schools.com', 'youtube.com', 'www.reddit.com/r/learnprogramming', 'en.wikipedia.org/wiki/Main_Page'];
 
 chrome.storage.sync.set({siteNames}, function() {
 	console.log('siteNames is set to ' + siteNames);

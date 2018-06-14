@@ -16,7 +16,7 @@ function createSearchURL(searchString, keywords, sites) {
     sitesString = '';
   }
   else {
-    sitesString = sites.map(site => `http://${site}`).reduce((acc, site) => `${acc} OR ${site}`);
+    sitesString = sites.map(site => `site:${site}`).reduce((acc, site) => `${acc} OR ${site}`);
     sitesString = `(${sitesString})`;
   }
   
@@ -26,8 +26,8 @@ function createSearchURL(searchString, keywords, sites) {
   // replace whitespace streaks (1 or more) with +
   const plusSearchString = concatSearchString.replace(/\s+/g, '+');
   
-  // run encode uri component and process parentheses to be url safe
-  const encodedSearchString = encodeURIComponent(plusSearchString).replace(/\(/g, "%28").replace(/\)/g, "%29");
+  // run encode uri component and process parentheses to be url safe, and remove https
+  const encodedSearchString = encodeURIComponent(plusSearchString).replace(/\(/g, "%28").replace(/\)/g, "%29").replace(/https?%3A%2F%2F/g, '');
   
   // add https://www.google.com/search?hl=en&q= and return
   return 'https://www.google.com/search?hl=en&q=' + encodedSearchString;

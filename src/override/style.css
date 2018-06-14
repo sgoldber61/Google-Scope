@@ -63,8 +63,6 @@ main {
 }
 
 .logo {
-  grid-row-start: 3;
-  grid-row-end: 4;
   width: 45%;
   justify-content: center;
 }
@@ -133,12 +131,26 @@ main h4 a {
   margin-bottom: .5rem;
 }
 
+.site-button {
+  border: none;
+}
 
 .site-button.unselected-site {
   
 }
 
 .site-button.selected-site {
-
+  background-color: green;
 }
+
+.site-button:hover {
+  background-color: #175cd3;
+  border: none;
+  cursor: pointer;
+}
+
+.site-button:focus {
+  outline: 0;
+}
+
 
