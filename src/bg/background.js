@@ -6,8 +6,31 @@
 
 
 //example of using a message handler from the inject scripts
+
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
   	chrome.pageAction.show(sender.tab.id);
     sendResponse();
   });
+
+  
+console.log('hello');
+const siteNames = ['stackoverflow.com', ];
+
+chrome.storage.sync.set({siteNames}, function() {
+	console.log('siteNames is set to ' + siteNames);
+});
+
+
+
+// right click stuff
+
+/*
+chrome.contextMenus.create({title: "Add site to ", contexts: ["selection"], onclick: addSiteToStorage});
+
+function addSiteToStorage() {
+  console.log('hi');
+  console.log(window.location.href);
+}
+*/
+

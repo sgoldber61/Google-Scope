@@ -1,0 +1,26 @@
+(javascript OR jquery) AND selector (site:w3schools.com OR site:stackoverflow.com)
+
+//-------------------------------------------------//
+full string:
+
+https://www.google.com/search
+
+?hl=en
+&ei=AgsiW_LSMoSs8AOy753IBw
+
+&q=%28javascript+OR+jquery%29+AND+selector+%28site%3Aw3schools.com+OR+site%3Astackoverflow.com%29
+&oq=%28javascript+OR+jquery%29+AND+selector+%28site%3Aw3schools.com+OR+site%3Astackoverflow.com%29
+
+&gs_l=psy-ab.3...30431.42622.0.43156.29.26.3.0.0.0.102.1740.25j1.26.0....0...1.1.64.psy-ab..1.0.0....0.riD18VHRZTo
+
+
+//-------------------------------------------------//
+essential, stripped down string:
+
+https://www.google.com/search
+
+?hl=en
+
+&q=%28javascript+OR+jquery%29+AND+selector+%28site%3Aw3schools.com+OR+site%3Astackoverflow.com%29
+
+

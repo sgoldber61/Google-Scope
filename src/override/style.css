@@ -1,0 +1,144 @@
+html {
+  height: 100vh;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media (min-width: 768px) {
+  .container {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: auto 1fr auto;
+  }
+  aside {
+    width: 50px;
+    margin-left: 3rem;
+    margin-top: 6rem;
+  }
+}
+
+body {
+  grid-template-rows: auto 1fr auto;
+  display: grid;
+  height: 100%;
+  margin: 0;
+  width: 100%;
+  grid-template-columns: 1fr;
+  grid-template-areas: "nav" "main" "footer";
+  text-align: center;
+}
+
+aside {
+  display: grid;
+  grid-area: main;
+  width: 100px;
+  margin-left: 9rem;
+  margin-top: 6rem;
+}
+
+.buttons {
+  cursor: pointer;
+}
+
+.buttons button.unselected-keyword {
+  
+}
+
+.buttons button.selected-keyword {
+  background-color: green;
+  border: none;
+}
+
+
+/* HERO SECTION */
+
+main {
+  justify-items: center;
+  align-content: flex-start;
+  display: grid;
+  margin-top: 5rem;
+  grid-area: main;
+}
+
+.logo {
+  grid-row-start: 3;
+  grid-row-end: 4;
+  width: 45%;
+  justify-content: center;
+}
+
+.logo svg {
+  width: 50%;
+  margin-left: 1rem;
+}
+
+.search input {
+  border: medium none;
+  height: 2.5rem;
+  box-shadow: 0 .1rem .1rem 0 rgba(0, 0, 0, 0.16), 0 0 0 .1rem rgba(0, 0, 0, 0.08);
+  width: 90%;
+  padding-left: 1rem;
+  align-content: center;
+  margin-bottom: 2rem;
+  border-radius: .15rem;
+  background-color: #fff;
+}
+
+.buttons button:active {
+  background-color: #175cd3;
+  color: #dadada;
+  border: none;
+}
+
+.buttons button {
+  border-radius: .15rem;
+  /* color: #757575; */
+  background-color: #f2f2f2;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin: .5rem auto;
+  border: .5rem solid #f2f2f2;
+  height: 3rem;
+  width: 150px;
+  font-family: arial;
+}
+
+.buttons button:hover {
+  background-color: #175cd3;
+  color: #dadada;
+  border: none;
+}
+
+.buttons button:focus {
+  outline: 0;
+}
+
+
+main h4 a {
+  text-decoration: none;
+  color: #525252;
+}
+
+.websites {
+  display: grid;
+  grid-gap: .2rem;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(4, 200px);
+}
+
+.site {
+  margin-left: -5rem;
+  margin-bottom: .5rem;
+}
+
+
+.site-button.unselected-site {
+  
+}
+
+.site-button.selected-site {
+
+}
+
