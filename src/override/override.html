@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
   <title>Google Scope</title>
 	
@@ -37,14 +38,33 @@
 
   <aside>
     <div class="buttons">
-      <button class="unselected-keyword">Javascript</button>
-      <button class="unselected-keyword">React</button>
-			<button class="unselected-keyword">Jquery</button>
-      <button class="unselected-keyword">GraphQL</button>
-      <button class="unselected-keyword">Node</button>
-
-    </div>
-
+			<!-- <div class="button-flex">
+        <i class="fa fa-close"></i>
+        <button class="unselected-keyword">Javascript</button>
+      </div>
+      <div class="button-flex">
+        <i class="fa fa-close"></i>
+        <button class="unselected-keyword">ReactJS</button>
+      </div>
+      <div class="button-flex">
+        <i class="fa fa-close"></i>
+        <button class="unselected-keyword">GraphQL</button>
+      </div>
+      <div class="button-flex">
+        <i class="fa fa-close"></i>
+        <button class="unselected-keyword">jQuery</button>
+      </div>
+      <div class="button-flex">
+        <i class="fa fa-close"></i>
+        <button class="unselected-keyword">NodeJS</button>
+      </div> -->
+      <div class="button-flex" id="new-term-div">
+        <i class="fa fa-close" id="new-term-x"></i>
+        <button id="input-button">
+          <input placeholder="Enter new term..." class="unselected-keyword" id="new-term-input"></input>
+        </button>
+    	</div>
+		</div>
   </aside>
   <main>
     <!-- Logo & Search Bar -->
@@ -63,7 +83,7 @@
         />
       </svg>
       <form class="search">
-        <input type="text" name="search-bar" placeholder="Search here...">
+        <input type="text" id="main-search-bar" name="search-bar" placeholder="Search here..." autofocus tabindex="0">
       </form>
 		</div>
       <!-- Buttons & Daily Message -->

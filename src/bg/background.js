@@ -14,19 +14,47 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   sendResponse();
 });
 
+
+// new tab stuff
+
+/*
+chrome.tabs.onCreated.addListener(function(tab) {
+    if (tab.url === 'chrome://newtab/') {
+          chrome.tabs.update(
+	         tab.id,
+	         {
+	            url: chrome.extension.getURL('./src/override/override.html')
+	         }
+	        );
+    }
+});
+*/
+
+
+
+// STORAGE DEFAULTS
+
+// default keyword names
+const keywordTerms = ['JavaScript', 'ReactJS', 'GraphQL', 'jQuery', 'NodeJS'];
+const keywords = keywordTerms.map(term => {
+  return {term, selected: false};
+});
+
+
 // default site names
 const siteNames = ['stackoverflow.com', 'github.com', 'developer.mozilla.org', 'medium.com', 'www.w3schools.com', 'youtube.com', 'www.reddit.com', 'en.wikipedia.org'];
-
 const sites = siteNames.map(siteName => {
-  return {hostName: siteName, title: ''};
+  return {hostName: siteName, title: '', selected: false};
 });
 
 
 // initialize storage with defaults
-
-chrome.storage.sync.set({sites}, function() {
+chrome.storage.sync.set({sites, keywords}, function() {
   console.log('sites data');
   console.log(sites);
+  
+  console.log('keywords data');
+  console.log(keywords);
 });
 
 
