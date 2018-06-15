@@ -94,7 +94,7 @@ chrome.contextMenus.onClicked.addListener(function() {
       }
       
       // add site
-      result.sites.push({title, hostName, selected: false});
+      result.sites.push({title: title.slice(0, 15), hostName, selected: false});
       chrome.storage.sync.set({sites: result.sites}, function() {
         console.log('site added');
       });
