@@ -3,12 +3,16 @@ window.addEventListener('load', function() {
   document.body.focus();
 });
 
+const defaultSiteNames = ['stackoverflow.com', 'github.com', 'developer.mozilla.org', 'medium.com', 'www.w3schools.com', 'youtube.com', 'www.reddit.com', 'en.wikipedia.org'];
+const defaultSiteImages = ["./assets/stack.png", "./assets/github.png", "./assets/mdn.png", "./assets/medium.png", "./assets/w3.png", "./assets/youtube.png", "./assets/reddit.png", "./assets/wiki.png"];
+const defaultSiteData = [];
+for (let i = 0; i < defaultSiteNames.length; i++) {
+  defaultSiteData.push({hostName: defaultSiteNames[i], image: defaultSiteImages[i]});
+}
+
 
 // get data from storage. load both sites and keywords
 chrome.storage.sync.get(['sites', 'keywords'], function(result) {
-	console.log('Stored sites:');
-  console.log(JSON.parse(JSON.stringify(result.sites)));
-  
   console.log('Stored keywords:');
   console.log(JSON.parse(JSON.stringify(result.keywords)));
   
@@ -17,8 +21,6 @@ chrome.storage.sync.get(['sites', 'keywords'], function(result) {
   for (const keyword of result.keywords) {
     createKeywordButton(keyword);
   }
-  
-  // 
   
   // give site buttons names depending on siteNames in storage
   $('.site-button').each(function(i) {
@@ -29,6 +31,15 @@ chrome.storage.sync.get(['sites', 'keywords'], function(result) {
   $('.buttons button:not("#input-button")').on('click', keywordButtonEventListener);
   $('.buttons i:not("#new-term-x")').on('click', keywordDeleteEventListener);
   
+  console.log('Stored sites:');
+  console.log(JSON.parse(JSON.stringify(result.sites)));
+  
+  // dynamically create websites
+  for (const site of result.sites) {
+    createSiteButton(site);
+  }
+  
+  
   // event handler for website toggle
   $('.site-button').on('click', function() {
     const $button = $(this);
@@ -37,6 +48,43 @@ chrome.storage.sync.get(['sites', 'keywords'], function(result) {
   });
 
 });
+
+// sites helper functions and listeners
+function createSiteButton(site) {
+  let $el;
+  let defaultImage = '';
+  for (const defaultSite of defaultSiteData) {
+    if (site.hostName === defaultSite.hostName) {
+      defaultImage = defaultSite.image;
+      break;
+    }
+  }
+  
+  // is this a default site?
+  if (defaultImage) {
+    $el = $(`<div class="site">
+      <button name=${site.hostName}>
+          <img src=${defaultImage} style="width:150px;  height:150px">
+      </button>
+    </div>`);
+    $el.find('button').attr('class', site.selected ? "site-button selected-site" : "site-button unselected-site");
+  }
+  else {
+    $el = $(`<div class="site">
+    <p class="new-title">${site.title}</p>
+    <button name=${site.hostName}>
+      <img src="./assets/default.png " alt="Default">
+    </button>
+  </div>`);
+    $el.find('button').attr('class', site.selected ? "site-button selected-site" : "site-button unselected-site");
+  }
+  
+  
+  $('.websites').append($el);
+  return $el;
+}
+
+
 
 // keyword helper functions and listeners
 $('#new-term-input').on('keyup', function(e) {
@@ -102,27 +150,48 @@ $('form').on('submit', function(e) {
   
   // obtain list of websites
   const sites = [];
+  const searchSites = [];
   $('.site-button').each(function(i) {
     const $button = $(this);
     const className = $button.attr('class'), site = $button.attr('name');
+    
+    // title
+    let title;
+    // default site title?
+    const alt = $button.find('img').attr('alt');
+    if (alt !== 'Default') {
+      title = '';
+    }
+    else {
+      title = $button.parent().find('p').html();
+    }
+    
     if (className === 'site-button selected-site') {
-      sites.push(site);
+      searchSites.push(site);
+      sites.push({hostName: site, title, selected: true});
+    }
+    else {
+      sites.push({hostName: site, title, selected: false});
     }
   });
-  console.log(sites);
+  console.log(searchSites);
   
   // store data
-  storeKeywordTerms(keywords);
+  console.log(sites);
+  storeKeywordTerms(keywords, sites);
   
   // submit the search
-  submitSearch(searchString, searchKeywords, sites);
+  submitSearch(searchString, searchKeywords, searchSites);
 });
 
 // store data fucntionality
-function storeKeywordTerms(keywords) {
-  chrome.storage.sync.set({keywords}, function() {
+function storeKeywordTerms(keywords, sites) {
+  chrome.storage.sync.set({keywords, sites}, function() {
     console.log('keywords data');
     console.log(keywords);
+    
+    console.log('sites data');
+    console.log(sites);
   });
 }
 
