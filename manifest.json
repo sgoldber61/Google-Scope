@@ -11,7 +11,6 @@
   },
   "default_locale": "en",
   "background": {
-    "persistent": false,
     "scripts": ["src/bg/background.js"]
   },
   "options_page": "src/options_custom/index.html",
@@ -30,23 +29,5 @@
     "storage",
     "history",
     "tabs"
-  ],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://www.google.com/*"
-      ],
-      "css": [
-        "src/inject/inject.css"
-      ]
-    },
-    {
-      "matches": [
-        "https://www.google.com/*"
-      ],
-      "js": [
-        "src/inject/inject.js"
-      ]
-    }
   ]
 }
